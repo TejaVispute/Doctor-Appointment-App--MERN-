@@ -4,20 +4,20 @@ const JWT = require('jsonwebtoken');
 module.exports = async (req, res, next) => {
 
     try {
+        // accessing jwt token from loal storage
         const token = req.headers['authorization'].split(' ')[1];
         // console.log(token)
-
+        
         JWT.verify(token, process.env.JWT_SECRET, (err, decode) => {
             if (err) {
-                return res.status(200).send({
+                return res.status(403).send({
                     message: 'User not authorized',
                     success: false,
                 })
             } else {
-                console.log(req.body.userId, '17 middlewares')
+                // console.log(req.body.userId, '17 middlewares')
                 req.userId = decode.id
                 next()
-
             }
         })
     } catch (error) {
