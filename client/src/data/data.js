@@ -25,3 +25,7 @@ export const sidebarMenu = [
         icon: "fa-solid fa-arrow-right-from-bracket"
     }
 ]
+
+
+// admin Menu
+
