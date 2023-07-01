@@ -2,6 +2,7 @@ const userModel = require("../models/userModels");
 const doctorModel = require("../models/doctorModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 // register callback function
 const registerController = async (req, res) => {
   // console.log(req.body)
@@ -176,6 +177,7 @@ const deleteAllNotificationController = async (req, res) => {
     });
   }
 };
+
 module.exports = {
   loginController,
   registerController,
