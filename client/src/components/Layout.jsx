@@ -1,12 +1,24 @@
-import { Link, useLocation } from "react-router-dom";
-import { sidebarMenu } from "../data/data";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { adminMenu, userMenu } from "../data/data";
 import "../styles/layout.css";
 import { useSelector } from "react-redux";
+import { message, Badge } from "antd";
 
 function Layout({ children }) {
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+  const navigate = useNavigate();
+  // conditionally randering user menu list
+  const sidebarMenu = user?.isAdmin ? adminMenu : userMenu;
+
+  // Logout function
+
+  const handleLogout = () => {
+    localStorage.clear();
+    message.success("logout Successful");
+    navigate("/login");
+  };
+
   return (
     <div className="main">
       <div className="layout">
@@ -27,6 +39,10 @@ function Layout({ children }) {
                 </>
               );
             })}
+            <div className={`menuItem`} onClick={handleLogout}>
+              <i className="fa-solid fa-arrow-right-from-bracket"></i>
+              <Link to="/login">Logout</Link>
+            </div>
           </div>
         </div>
         <div className="content">
@@ -36,7 +52,16 @@ function Layout({ children }) {
                 {" "}
                 <span>{user ? "Welcome :" : ""}</span> {user?.name}
               </Link>
-              <i className="fa-solid fa-bell" />
+
+              <Badge
+                style={{ cursor: "pointer" }}
+                count={user && user.notification.length}
+                onClick={() => {
+                  navigate("/notifications");
+                }}
+              >
+                <i className="fa-solid fa-bell" />
+              </Badge>
             </div>
           </div>
           <div className="body">{children}</div>
