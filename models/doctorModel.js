@@ -40,7 +40,7 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Fees is required"],
     },
-    statse: {
+    status: {
       type: String,
       default: "Pending",
     },
