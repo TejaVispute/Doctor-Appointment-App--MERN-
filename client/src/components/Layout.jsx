@@ -1,4 +1,4 @@
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { adminMenu, userMenu } from "../data/data";
 import "../styles/layout.css";
 import { useSelector } from "react-redux";
@@ -8,9 +8,32 @@ function Layout({ children }) {
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  // doctor menu list
+  const doctorMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "fa-solid fa-house",
+    },
+    {
+      name: "Appointments",
+      path: "/appointments",
+      icon: "fa-solid fa-list-ul",
+    },
+    {
+      name: "Profile",
+      path: `/doctor/profile/${user?._id}`,
+      icon: "fa-solid fa-circle-user",
+    },
+  ];
   // conditionally randering user menu list
-  const sidebarMenu = user?.isAdmin ? adminMenu : userMenu;
+  const sidebarMenu = user?.isAdmin
+    ? adminMenu
+    : user?.isDoctor
+    ? doctorMenu
+    : userMenu;
 
+  console.log(sidebarMenu);
   // Logout function
 
   const handleLogout = () => {

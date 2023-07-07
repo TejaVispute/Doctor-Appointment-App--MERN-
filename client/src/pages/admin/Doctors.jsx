@@ -3,8 +3,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { API } from "../../../config";
 import { Table, message } from "antd";
+
 const Doctors = () => {
-  const [doctors, setDoctors] = useState([]);
+  const [doctors, setDoctors] = useState();
   // console.log(doctors);
   const getDoctors = async () => {
     try {
@@ -17,14 +18,13 @@ const Doctors = () => {
       if (res.data.success) {
         setDoctors(res.data.data);
       } else {
-        console.log("Error Occured");
+        console.log("Error Occurred");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  // handle account status
   const handleAccountStatus = async (record, status) => {
     try {
       const res = await axios.post(
@@ -40,9 +40,19 @@ const Doctors = () => {
           },
         }
       );
-      // success handling
+
       if (res.data.success) {
         message.success(res.data.message);
+
+        // Update the status in the local state
+        const updatedDoctors = doctors.map((doctor) => {
+          if (doctor._id === record._id) {
+            return { ...doctor, status };
+          }
+          return doctor;
+        });
+
+        setDoctors(updatedDoctors);
       }
     } catch (error) {
       message.error("Something went wrong");
@@ -52,8 +62,6 @@ const Doctors = () => {
   useEffect(() => {
     getDoctors();
   }, []);
-
-  // table infos
 
   const columns = [
     {
@@ -80,21 +88,22 @@ const Doctors = () => {
         <div className="d-flex">
           {record.status === "pending" ? (
             <button
-              className="btn btn-success"
-              onClick={() => handleAccountStatus(record, "approved")}
+              className="btn btn-success btn-sm"
+              onClick={() => handleAccountStatus(record, "Approved")}
             >
               Approve
             </button>
           ) : (
-            <button className="btn btn-danger">Reject</button>
+            <button className="btn btn-danger btn-sm">Reject</button>
           )}
         </div>
       ),
     },
   ];
+
   return (
     <Layout>
-      <h1>All Doctors</h1>
+      <h1 className="p-3 text-center bg-secondary text-white">All Doctors</h1>
       <Table columns={columns} dataSource={doctors} />
     </Layout>
   );

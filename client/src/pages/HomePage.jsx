@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { API } from "../../config";
 import Layout from "../components/Layout";
+
+
 const HomePage = () => {
   const getUserData = async () => {
     try {
@@ -26,7 +28,7 @@ const HomePage = () => {
 
   return (
     <Layout>
-      <h1>HomePage</h1>
+     <h1 className="text-center p-3 bg-secondary text-light ">Home Page</h1>
     </Layout>
   );
 };
