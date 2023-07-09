@@ -7,7 +7,6 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   console.log(users);
   //   get users
-
   const getUsers = async () => {
     try {
       const res = await axios.get(`${API}/api/v1/admin/getAllUsers`, {

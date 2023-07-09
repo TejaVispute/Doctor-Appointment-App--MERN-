@@ -33,7 +33,6 @@ function Layout({ children }) {
     ? doctorMenu
     : userMenu;
 
-  console.log(sidebarMenu);
   // Logout function
 
   const handleLogout = () => {

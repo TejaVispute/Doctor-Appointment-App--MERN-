@@ -45,7 +45,7 @@ const loginController = async (req, res) => {
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (!isMatch) {
-      return res.statue(200).send({
+      return res.status(200).send({
         message: "invalid Email or password",
         success: false,
       });
@@ -178,6 +178,34 @@ const deleteAllNotificationController = async (req, res) => {
   }
 };
 
+// for getting all doctors
+const getAllDoctors = async (req, res) => {
+
+  try {
+    const doctors = await doctorModel.find({ status: "Approved" });
+
+    if (!doctors) {
+      res.status(404).send({
+        success: false,
+        message: "No Doctor found",
+
+      });
+    } else {
+      res.status(200).send({
+        success: true,
+        message: "Found All Doctors",
+        data: doctors
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "No Doctors Found",
+      error
+    })
+  }
+}
 module.exports = {
   loginController,
   registerController,
@@ -185,4 +213,5 @@ module.exports = {
   applyDoctorController,
   getAllNotificationController,
   deleteAllNotificationController,
+  getAllDoctors
 };

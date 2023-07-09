@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
 
     try {
         // accessing jwt token from loal storage
-        console.log(req.headers)
+        // console.log(req.headers)
         const token = req.headers['authorization'].split(' ')[1];
         // console.log(token)
 
