@@ -35,7 +35,7 @@ const HomePage = () => {
   return (
     <Layout>
       <h1 className="text-center p-3 bg-secondary text-light ">Home Page</h1>
-      <div style={{display:"grid" ,gridTemplateColumns:"1fr 1fr 1fr 1fr",padding:"5px",gap:"10px"}}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", padding: "5px", gap: "10px" }}>
         {doctors &&
           doctors.map((doctor, index) => (
             <DoctorList doctor={doctor} key={index} />
